@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Testing layout of Electron</title>
+     <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class ="top-container">
+      <div class="title" align="left">
+        <h1>Energy Usage: Your Home</h1>
+      </div>
+      <div class="time_date_weather_location">
+        <div class="time_date" align="right">
+          <h2>2:33 PM</h2>
+          <h3>Thu June 23</h3>
+        </div>
+        <div class="weather_location" align ="right">
+          <h2>80°</h2>
+          <h3>Irvine,CA</h3>
+        </div>
+      </div>
+    </div>
+
+     <div id="chart"></div>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <!--We are using node <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>. -->
+
+
+    <div id="footer">
+      <div class="SCE_notifications">
+        <h2>SCE:Peak in Energy Use! Please try to lower your energy consumption from 2pm-6pm today.</h2>
+      </div>
+    </div>
+
+
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  
+  </script>
+</html>
