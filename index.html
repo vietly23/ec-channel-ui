@@ -2,10 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Testing layout of Electron</title>
+    <title>EC-Channel Home</title>
      <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <div id="background">
     <div class ="top-container">
       <div class="title" align="left">
         <h1>Energy Usage: Your Home</h1>
@@ -27,7 +28,7 @@
     <!--We are using node <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>. -->
-
+  </div>
 
     <div id="footer">
       <div class="SCE_notifications">
@@ -41,6 +42,6 @@
   <script>
     // You can also require other files to run in this process
     require('./renderer.js')
-  
+
   </script>
 </html>
