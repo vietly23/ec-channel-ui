@@ -3,6 +3,12 @@ const electron = require('electron')
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
+// Module to handle processes
+const exec = require('child_process').exec;
+// Module to read files
+const fs = require('fs');
+// Module to execute commands
+const execSync = require('child_process').execSync;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -26,6 +32,20 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+}
+
+function connect_wifi(wifi_name, password) {
+		var template = fs.readFileSync("wifi-template.xml",encoding="utf-8");
+        var hex = "";
+        for (var i = 0; i < wifi_name.length; i++)
+            hex += wifi_name.charCodeAt(i).toString(16);
+        template = template.replace("{hex}", hex);
+		template = template.replace("{network}", wifi_name);
+		template = template.replace("{password}", password);
+		fs.writeFileSync("EC-Profile.xml", template);
+        execSync("netsh wlan add profile EC-Profile.xml");
+        execSync("netsh wlan connect " + wifi_name);
+        return true;
 }
 
 // This method will be called when Electron has finished
