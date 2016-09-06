@@ -48,6 +48,22 @@ function connect_wifi(wifi_name, password) {
         return true;
 }
 
+function get_wifi() {
+	var wifi_list = execSync("netsh wlan show networks").toString('utf-8').split('\r\n\r\n');
+	wifi_list.shift(); 
+	return wifi_list.map(wifi_parse);
+}
+
+function wifi_parse(wifi_string) {
+	var wifi_attr = wifi_string.split('\r\n');
+	var wifi_object = {ssid:wifi_attr[0].split(':')[1].trim()};
+	for (i = 1; i < wifi_attr.length; i++) {
+		var value = wifi_attr[i].split(':');
+		wifi_object[value[0].trim()] = value[1].trim();
+	}
+	return wifi_object;
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
