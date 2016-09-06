@@ -49,17 +49,33 @@ function connect_wifi(wifi_name, password) {
 }
 
 function get_wifi() {
-	var wifi_list = execSync("netsh wlan show networks").toString('utf-8').split('\r\n\r\n');
+	var wifi_list = execSync("netsh wlan show networks mode=bssid").toString('utf-8').split('\r\n\r\n');
 	wifi_list.shift(); 
-	return wifi_list.map(wifi_parse);
+    wifi_list.pop();
+    var wifi_objects = [];
+    for (j = 0; j < wifi_list.length; j++) {
+        try {
+            wifi_objects.push(wifi_parse(wifi_list[j]));
+        } 
+        catch (e) {
+            continue;
+        }
+    }
+    return wifi_objects;
 }
 
 function wifi_parse(wifi_string) {
 	var wifi_attr = wifi_string.split('\r\n');
 	var wifi_object = {ssid:wifi_attr[0].split(':')[1].trim()};
 	for (i = 1; i < wifi_attr.length; i++) {
-		var value = wifi_attr[i].split(':');
-		wifi_object[value[0].trim()] = value[1].trim();
+		var pair = wifi_attr[i].split(':');
+        var key = pair[0].trim().toLowerCase().replace(' ','_');
+        var value = pair[1].trim();
+        if (key === 'signal')
+            value = parseInt(value.substr(0,3));
+        if (key === 'channel')
+            value = parseInt(value.substr(0,3));
+		wifi_object[key] = value;
 	}
 	return wifi_object;
 }
@@ -86,6 +102,7 @@ app.on('activate', function () {
   }
 
 })
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
