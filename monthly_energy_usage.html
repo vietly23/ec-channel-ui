@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<style>
+
+ .axis {
+   font: 10px sans-serif;
+ }
+
+ .axis path,
+ .axis line {
+   fill: none;
+   stroke: #000;
+   shape-rendering: crispEdges;
+ }
+
+ </style>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>EC-Channel Monthly Energy Usage</title>
+  </head>
+  <body>
+    <div id="background">
+      <h1>Bar graph content</h1>
+        <div class="chart">
+        </div>
+    </div>
+  </body>
+
+
+
+  <script>
+  setTimeout(function(){
+   window.location='index.html';
+ }, 1000000);
+
+  // You can also require other files to run in this process
+  require('./monthly_energy_usage_renderer.js')
+  </script>
