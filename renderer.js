@@ -3,6 +3,7 @@
 // All of the Node.js APIs are available in this process.
 var d3  = require("d3");
 var data = require('./mydata.json');
+var ZIPCODE = 92612;
 
 /*var canvas = d3.select("body").append("svg")
   .attr("width", 500)
@@ -94,7 +95,7 @@ var HttpClient = function() {
 
 function updateClock() {
     var now = new Date();
-    var time_options = {hour: 'numeric', minute: 'numeric', timeZoneName: 'short'};
+    var time_options = {hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short'};
     var time_format = new Intl.DateTimeFormat('en-US', time_options)
     var date_options = {month: 'short', day: 'numeric', weekday: 'short'};
     var date_format = new Intl.DateTimeFormat('en-US', date_options);
@@ -103,8 +104,7 @@ function updateClock() {
     document.getElementById('date').innerHTML = date_format.format(now); 
 }
 
-function getWeather() {
-	var zipcode = 92606;
+function getWeather(zipcode) {
 	var WEATHER_URL = 'http://api.wunderground.com/api/';
 	var WEATHER_KEY = '845b12ce9e363cea';
 	var url = `${WEATHER_URL}/${WEATHER_KEY}/conditions/q/${zipcode}.json`;
@@ -119,7 +119,7 @@ function changeWeather(text) {
 	document.getElementById('temp').innerHTML = temp_f;
 }
 
-function connect_wifi(wifi_name, password) {
+function connectWifi(wifi_name, password) {
 	var template = fs.readFileSync("wifi-template.xml",encoding="utf-8");
     var hex = "";
     for (var i = 0; i < wifi_name.length; i++)
@@ -133,7 +133,7 @@ function connect_wifi(wifi_name, password) {
     return true;
 }
 
-function get_wifi() {
+function getWifi() {
 	/* Parses Powershell output to produce an array of objects.
 	 * Contains attributes such as ssid, signal_strength, etc.
 	*/
@@ -152,7 +152,7 @@ function get_wifi() {
     return wifi_objects;
 }
 
-function wifi_parse(wifi_string) {
+function wifiParse(wifi_string) {
 	var wifi_attr = wifi_string.split('\r\n');
 	var wifi_object = {ssid:wifi_attr[0].split(':')[1].trim()};
 	for (i = 1; i < wifi_attr.length; i++) {
@@ -169,5 +169,5 @@ function wifi_parse(wifi_string) {
 }
 
 setInterval(updateClock,1000); //1 second update interval
-getWeather();
-setInterval(function(){getWeather();}, 5 * 60 * 1000); //5 minute update interval
+getWeather(ZIPCODE);
+setInterval(function(){getWeather(ZIPCODE);}, 5 * 60 * 1000); //5 minute update interval
