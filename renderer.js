@@ -92,16 +92,16 @@ function updateClock() {
 
 function connect_wifi(wifi_name, password) {
 		var template = fs.readFileSync("wifi-template.xml",encoding="utf-8");
-        var hex = "";
-        for (var i = 0; i < wifi_name.length; i++)
-            hex += wifi_name.charCodeAt(i).toString(16);
-        template = template.replace("{hex}", hex);
+    var hex = "";
+    for (var i = 0; i < wifi_name.length; i++)
+         hex += wifi_name.charCodeAt(i).toString(16);
+    template = template.replace("{hex}", hex);
 		template = template.replace("{network}", wifi_name);
 		template = template.replace("{password}", password);
 		fs.writeFileSync("EC-Profile.xml", template);
-        execSync("netsh wlan add profile EC-Profile.xml");
-        execSync("netsh wlan connect " + wifi_name);
-        return true;
+    execSync("netsh wlan add profile EC-Profile.xml");
+    execSync("netsh wlan connect " + wifi_name);
+    return true;
 }
 
 function get_wifi() {
