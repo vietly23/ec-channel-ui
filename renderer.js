@@ -79,6 +79,16 @@ canvas.selectAll("rect")
         .attr('fill', function(d, i) {
           return color(d.data.label);
         });*/
+function updateClock() {
+    var now = new Date();
+    var time_options = {hour: 'numeric', minute: 'numeric', timeZoneName: 'short'};
+    var time_format = new Intl.DateTimeFormat('en-US', time_options)
+    var date_options = {month: 'short', day: 'numeric', weekday: 'short'};
+    var date_format = new Intl.DateTimeFormat('en-US', date_options);
+    // set the content of the element with the ID time to the formatted string
+    document.getElementById('clock').innerHTML = time_format.format(now);
+    document.getElementById('date').innerHTML = date_format.format(now); 
+}
 
 function connect_wifi(wifi_name, password) {
 		var template = fs.readFileSync("wifi-template.xml",encoding="utf-8");
@@ -129,3 +139,4 @@ function wifi_parse(wifi_string) {
 	return wifi_object;
 }
 
+setInterval(updateClock,1000);
