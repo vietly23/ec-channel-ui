@@ -79,6 +79,19 @@ canvas.selectAll("rect")
         .attr('fill', function(d, i) {
           return color(d.data.label);
         });*/
+
+var HttpClient = function() {
+	this.get = function(aUrl, aCallback) {
+		var anHttpRequest = new XMLHttpRequest();
+		anHttpRequest.onreadystatechange = function() { 
+			if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+				aCallback(anHttpRequest.responseText);
+		}
+		anHttpRequest.open( "GET", aUrl, true );
+		anHttpRequest.send( null );
+	}
+}
+
 function updateClock() {
     var now = new Date();
     var time_options = {hour: 'numeric', minute: 'numeric', timeZoneName: 'short'};
@@ -90,8 +103,24 @@ function updateClock() {
     document.getElementById('date').innerHTML = date_format.format(now); 
 }
 
+function getWeather() {
+	var zipcode = 92606;
+	var WEATHER_URL = 'http://api.wunderground.com/api/';
+	var WEATHER_KEY = '845b12ce9e363cea';
+	var url = `${WEATHER_URL}/${WEATHER_KEY}/conditions/q/${zipcode}.json`;
+	var weather_client = new HttpClient();
+	weather_client.get(url, changeWeather);
+}
+
+function changeWeather(text) {
+	var json_response = JSON.parse(text);
+	var temp_f = json_response.current_observation.temp_f;
+	console.log(`new_temp : ${temp_f}`);
+	document.getElementById('temp').innerHTML = temp_f;
+}
+
 function connect_wifi(wifi_name, password) {
-		var template = fs.readFileSync("wifi-template.xml",encoding="utf-8");
+	var template = fs.readFileSync("wifi-template.xml",encoding="utf-8");
     var hex = "";
     for (var i = 0; i < wifi_name.length; i++)
          hex += wifi_name.charCodeAt(i).toString(16);
@@ -139,4 +168,6 @@ function wifi_parse(wifi_string) {
 	return wifi_object;
 }
 
-setInterval(updateClock,1000);
+setInterval(updateClock,1000); //1 second update interval
+getWeather();
+setInterval(function(){getWeather();}, 5 * 60 * 1000); //5 minute update interval
