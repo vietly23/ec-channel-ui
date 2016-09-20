@@ -5,10 +5,15 @@
   background: -moz-linear-gradient(45deg, white, yellow); /* For Firefox 3.6 to 15 */
   background: linear-gradient(45deg, white, yellow); /* Standard syntax */
 }
+
 #footer {
     position: fixed;
     bottom: 0;
     width: 100%;
     background: green;
     color: yellow;
+}
+
+* {
+	font-family: 'Open Sans', 'sans-serif';
 }
