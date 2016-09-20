@@ -16,7 +16,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 800, height: 600, show: false})
   mainWindow.setFullScreen(true);
 
   // and load the index.html of the app.
@@ -32,6 +32,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  mainWindow.once('ready-to-show', () => {mainWindow.show()})
 }
 
 // This method will be called when Electron has finished
@@ -54,7 +55,6 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
-
 })
 
 
