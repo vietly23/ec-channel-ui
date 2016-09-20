@@ -2,10 +2,8 @@ import serial
 import xml.etree.ElementTree as ET
 from time import sleep
 
-try:
-    from find_ports import comports
-except ImportError:
-    from EnergyChannel.find_ports import comports
+from find_ports import comports
+
 RAVEN_PID = 0x8a28
 RAVEN_VID = 1027
 
