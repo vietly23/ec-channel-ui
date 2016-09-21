@@ -5,18 +5,6 @@ var d3  = require("d3");
 var data = require('./mydata.json');
 var ZIPCODE = 92612;
 
-/*var canvas = d3.select("body").append("svg")
-  .attr("width", 500)
-  .attr("height", 500)
-
-canvas.selectAll("rect")
-  .data(data)
-  .enter()
-  .append("rect")
-  .attr("width", function(d){return d.count*10;})
-  .attr("height",48)
-  .attr("y", function(d, i) {return i*50;})
-  .attr("fill", "blue")*/
 
   var width = 500;
   var height = 500;
@@ -44,6 +32,38 @@ canvas.selectAll("rect")
     .attr('fill', function(d, i) {
       return color(d.data.label);
     });
+
+
+//comparison donut graph - curerntly there is an issue of how to move it
+//to the right side
+    var cWidth = 500;
+    var cHeight = 500;
+    var cRadius = Math.min(cWidth, cHeight) / 2;
+    var cDonutWidth = 75;                            // NEW
+    var cColor = d3.scaleOrdinal(d3.schemeCategory20b);
+    var cSvg = d3.select('#chart')
+      .append('svg')
+      .attr('width', cWidth)
+      .attr('height', cHeight)
+      .append('g')
+      .attr('transform', 'translate(' + (cWidth*4/1.75) +
+        ',' + (cHeight*4 / 8) + ')');
+    var cArc = d3.arc()
+      .innerRadius(cRadius - cDonutWidth)             // UPDATED
+      .outerRadius(cRadius);
+    var cPie = d3.pie()
+      .value(function(d) { return d.count; })
+      .sort(null);
+    var cPath = cSvg.selectAll('path')
+      .data(cPie(data))
+      .enter()
+      .append('path')
+      .attr('d', cArc)
+      .attr('fill', function(d, i) {
+        return cColor(d.data.label);
+      });
+
+
 
 
 
@@ -84,7 +104,7 @@ canvas.selectAll("rect")
 var HttpClient = function() {
 	this.get = function(aUrl, aCallback) {
 		var anHttpRequest = new XMLHttpRequest();
-		anHttpRequest.onreadystatechange = function() { 
+		anHttpRequest.onreadystatechange = function() {
 			if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
 				aCallback(anHttpRequest.responseText);
 		}
@@ -101,7 +121,9 @@ function updateClock() {
     var date_format = new Intl.DateTimeFormat('en-US', date_options);
     // set the content of the element with the ID time to the formatted string
     document.getElementById('clock').innerHTML = time_format.format(now);
-    document.getElementById('date').innerHTML = date_format.format(now).replace(",",""); 
+
+    document.getElementById('date').innerHTML = date_format.format(now).replace(",","");
+
 }
 
 function getWeather(zipcode) {
@@ -138,13 +160,13 @@ function getWifi() {
 	 * Contains attributes such as ssid, signal_strength, etc.
 	*/
 	var wifi_list = execSync("netsh wlan show networks mode=bssid").toString('utf-8').split('\r\n\r\n');
-	wifi_list.shift(); 
+	wifi_list.shift();
     wifi_list.pop();
     var wifi_objects = [];
     for (j = 0; j < wifi_list.length; j++) {
         try {
             wifi_objects.push(wifi_parse(wifi_list[j]));
-        } 
+        }
         catch (e) {
             continue;
         }

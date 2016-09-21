@@ -10,7 +10,8 @@ var d3  = require("d3");
 			var barPadding = 1;
 
       //index position corresponds to a specific month - Data array size max 12
-			var dataset = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ];
+			//value between 1-15 kW
+			var dataset = [1, 5, 10, 8, 2, 13, 12, 3, 6, 10, 11, 9 ];
 
 			//Create SVG element
 			var svg = d3.select("body")
@@ -32,8 +33,26 @@ var d3  = require("d3");
 			   .attr("height", function(d) {
 			   		return d * 4;
 			   })
+				 //change colors of bars based on their value
 			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
+					 if( d >= 0 && d < 5){
+					 	return "blue"
+					 }
+					 else if( d >= 5 && d < 10)
+					 {
+						 return "green"
+					 }
+					 else if ( d >= 10 && d < 15 )
+					 {
+						 return "orange"
+					 }
+					 else if ( d>=15)
+					 {
+						 return "red"
+					 }
+					 /*else{
+						 return "rgb(0, 0, " + (d * 10) + ")";
+					 }*/
 			   });
 /*
 
