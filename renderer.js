@@ -1,9 +1,11 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
-var d3  = require("d3");
+const d3  = require("d3");
 var data = require('./mydata.json');
-var ZIPCODE = 92612;
+const ZIPCODE = 92612;
+const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 
 
   var width = 500;
@@ -141,6 +143,16 @@ function changeWeather(text) {
 	document.getElementById('temp').innerHTML = temp_f;
 }
 
+function getDemand() {
+	exec('python python/get_data.py', (error, stdout, stderr) => { 
+		if (error) {
+			console.log(error);
+			return;
+		}
+		document.getElementById('power_demand_value').innerHTML = stdout;
+	});
+}
+
 function connectWifi(wifi_name, password) {
 	var template = fs.readFileSync("wifi-template.xml",encoding="utf-8");
     var hex = "";
@@ -193,3 +205,5 @@ function wifiParse(wifi_string) {
 setInterval(updateClock,1000); //1 second update interval
 getWeather(ZIPCODE);
 setInterval(function(){getWeather(ZIPCODE);}, 5 * 60 * 1000); //5 minute update interval
+getDemand();
+setInterval(getDemand,5000);
