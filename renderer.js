@@ -3,7 +3,6 @@
 // All of the Node.js APIs are available in this process.
 const d3  = require("d3");
 var data = require('./mydata.json');
-const ZIPCODE = 92612;
 const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
 
@@ -117,30 +116,29 @@ var HttpClient = function() {
 
 function updateClock() {
     var now = new Date();
-    var time_options = {hour: 'numeric', minute: 'numeric', timeZoneName: 'short'};
+    var time_options = {hour: 'numeric', minute: 'numeric'};
     var time_format = new Intl.DateTimeFormat('en-US', time_options)
     var date_options = {month: 'short', day: 'numeric', weekday: 'short'};
     var date_format = new Intl.DateTimeFormat('en-US', date_options);
     // set the content of the element with the ID time to the formatted string
     document.getElementById('clock').innerHTML = time_format.format(now);
-
     document.getElementById('date').innerHTML = date_format.format(now).replace(",","");
-
 }
 
-function getWeather(zipcode) {
+function getWeather() {
 	var WEATHER_URL = 'http://api.wunderground.com/api/';
 	var WEATHER_KEY = '845b12ce9e363cea';
-	var url = `${WEATHER_URL}/${WEATHER_KEY}/conditions/q/${zipcode}.json`;
+	var url = `${WEATHER_URL}/${WEATHER_KEY}/conditions/q/autoip.json`;
 	var weather_client = new HttpClient();
 	weather_client.get(url, changeWeather);
 }
 
 function changeWeather(text) {
 	var json_response = JSON.parse(text);
-	var temp_f = json_response.current_observation.temp_f;
-	console.log(`new_temp : ${temp_f}`);
-	document.getElementById('temp').innerHTML = temp_f;
+	document.getElementById('temp').innerHTML = json_response.current_observation.temp_f;
+	document.getElementById('weather_icon').src = json_response.current_observation.icon_url;
+	//document.getElementById('location').innerHTML = json_response['location'].city;
+	document.getElementById('city').innerHTML = json_response.current_observation.display_location.city;
 }
 
 function getDemand() {
@@ -203,7 +201,7 @@ function wifiParse(wifi_string) {
 }
 
 setInterval(updateClock,1000); //1 second update interval
-getWeather(ZIPCODE);
-setInterval(function(){getWeather(ZIPCODE);}, 5 * 60 * 1000); //5 minute update interval
+getWeather();
+setInterval(getWeather, 5 * 60 * 1000); //5 minute update interval
 getDemand();
 setInterval(getDemand,5000);

@@ -14,12 +14,13 @@
       </div>
       <div class="time_date_weather_location">
         <div class="time_date" align="right">
-          <h2 id="clock">12:00 AM</h2>
-          <h3 id="date">Thu June 23</h3>
+          <span id="clock">12:00 AM</span>
+		  <img id="weather_icon" src='data:image/gif;base64,R0lGODlhMgAyAMQeAPmvVvefIPXoMPzXqveaH/ibLPq8c/a2JfmoSPerI/3r1f3kx/bYLPzduPvJjvihOvXdLf748f7y4/bBKPbHKfvDgfbMKvvQnPbSK/a7JvXjL/q2ZfeUHvXuMf///wAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGMDlDMTdCMDFEQjMxMUUwQTNDOERGQURFNkYxNTBBMyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGMDlDMTdCMTFEQjMxMUUwQTNDOERGQURFNkYxNTBBMyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYwOUMxN0FFMURCMzExRTBBM0M4REZBREU2RjE1MEEzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYwOUMxN0FGMURCMzExRTBBM0M4REZBREU2RjE1MEEzIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAHgAsAAAAADIAMgAABf+gJ45kaZ5oqq5s675wLI/AbI+NQQ7cQBqNm8vRGz04jxHPIWwRiw2ONMjjMJslBWJBk/YAXkCVUxMtEAqsFCDxgL3SBHztkbyxbq+hwJkQpAEdAVIEExwFBmF4FXMcDBB/Fh0WHAQQDI0VNhdcIlF9fxwQHRCBHYKjEISGHEFmFy+JHAgGjI4CBxynu7ynHAcCmBwVBghSOi4RfHMUpxq90M8dFI0FETAXgIO/0N28uRwB27AxR4HBkt7eFgwCgkgyEU/N6vW71FbXLBsAy14E7uypExDKSwEAG1Io8BcnAQaB6jAkkAOnQJoUEoxxyACx46kMUhC0WRFB4wGPAsH/IdDHYmGcgCh7CaDI4eKKBW8qAYsJDVdBAJ1ODDgCaAJMnj0nbEPiw8RQLwEoHEXKSwCFpQ+ansD5byfVUz7DBFXhkkOCqTxnSrGYzORXaCpZYtTI8S00kLNGoijrZeJDqhJprrVpgh/DSmg9EpxzMCELCfPs4nOg94W5DuhisnM3KEmMbOG2nUQJTpwUcskOc6AnTZ00fBXlrpBFy1a7XPZ+BZNCTCOyFpxwSPEjJZUpVKRWTRmxAHUMW3AeRZpU6VImPDn39NkWaFuhQ7LI4FnTJmffRjXsSMGiJWjOATnFKDKDBg+JJz4+tfJQ5Yr9E0RodYRn/FnxHwo57FDEEwhAHOhCGQ5GKOGEFFZo4YUthAAAOw==' />
+          <span id="date">Thu June 23</span>
         </div>
         <div class="weather_location" align ="right">
 			<h2><span id="temp">65</span>&#176 F</h2>
-          <h3>Irvine, CA</h3>
+          <h3 id="city">Sunnyvale</h3>
         </div>
         <div class = "power_demand" align ="right">
 			<h2>Power Demand: <span id="power_demand_value">0.15</span>kwH</h2>
@@ -44,9 +45,11 @@
   </body>
 
   <script>
+/*
     setTimeout(function(){
      window.location='comparison.html';
    }, 10000); //10000000
+*/
     // You can also require other files to run in this process
     require('./renderer.js')
 
