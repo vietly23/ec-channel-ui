@@ -3,12 +3,6 @@ const electron = require('electron')
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
-// Module to handle processes
-const exec = require('child_process').exec;
-// Module to read files
-const fs = require('fs');
-// Module to execute commands
-const execSync = require('child_process').execSync;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,6 +12,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600, show: false})
   mainWindow.setFullScreen(true);
+  mainWindow.setMenu(null);
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`)
