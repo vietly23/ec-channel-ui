@@ -14,60 +14,55 @@ const execSync = require('child_process').execSync;
   var color = d3.scaleOrdinal(d3.schemeCategory20b);
   var svg = d3.select('#chart')
     .append('svg')
-    .attr('width', width)
-    .attr('height', height)
+      .attr('width', width)
+      .attr('height', height)
     .append('g')
-    .attr('transform', 'translate(' + (width / 2) +
-      ',' + (height / 2) + ')');
+      .attr('transform', 'translate(' + (width / 2) +
+        ',' + (height / 2) + ')');
   var arc = d3.arc()
-    .innerRadius(radius - donutWidth)             // UPDATED
-    .outerRadius(radius);
+      .innerRadius(radius - donutWidth)             // UPDATED
+      .outerRadius(radius);
   var pie = d3.pie()
-    .value(function(d) { return d.count; })
-    .sort(null);
+      .value(function(d) { return d.count; })
+      .sort(null);
   var path = svg.selectAll('path')
-    .data(pie(data))
-    .enter()
+      .data(pie(data))
+      .enter()
     .append('path')
-    .attr('d', arc)
-    .attr('fill', function(d, i) {
-      return color(d.data.label);
+      .attr('d', arc)
+      .attr('fill', function(d, i) {
+        return color(d.data.label);
     });
 
 
 //comparison donut graph - curerntly there is an issue of how to move it
 //to the right side
-    var cWidth = 500;
-    var cHeight = 500;
-    var cRadius = Math.min(cWidth, cHeight) / 2;
-    var cDonutWidth = 75;                            // NEW
-    var cColor = d3.scaleOrdinal(d3.schemeCategory20b);
-    var cSvg = d3.select('#chart')
-      .append('svg')
-      .attr('width', cWidth)
-      .attr('height', cHeight)
-      .append('g')
-      .attr('transform', 'translate(' + (cWidth*4/1.75) +
-        ',' + (cHeight*4 / 8) + ')');
-    var cArc = d3.arc()
-      .innerRadius(cRadius - cDonutWidth)             // UPDATED
-      .outerRadius(cRadius);
-    var cPie = d3.pie()
-      .value(function(d) { return d.count; })
-      .sort(null);
-    var cPath = cSvg.selectAll('path')
-      .data(cPie(data))
-      .enter()
-      .append('path')
-      .attr('d', cArc)
-      .attr('fill', function(d, i) {
-        return cColor(d.data.label);
-      });
-
-
-
-
-
+//    var cWidth = 500;
+//    var cHeight = 500;
+//    var cRadius = Math.min(cWidth, cHeight) / 2;
+//    var cDonutWidth = 75;                            // NEW
+//    var cColor = d3.scaleOrdinal(d3.schemeCategory20b);
+//    var cSvg = d3.select('#chart')
+//      .append('svg')
+//      .attr('width', cWidth)
+//      .attr('height', cHeight)
+//      .append('g')
+//      .attr('transform', 'translate(' + (cWidth*4/1.75) +
+//        ',' + (cHeight*4 / 8) + ')');
+//    var cArc = d3.arc()
+//      .innerRadius(cRadius - cDonutWidth)             // UPDATED
+//      .outerRadius(cRadius);
+//    var cPie = d3.pie()
+//      .value(function(d) { return d.count; })
+//      .sort(null);
+//    var cPath = cSvg.selectAll('path')
+//      .data(cPie(data))
+//      .enter()
+//      .append('path')
+//      .attr('d', cArc)
+//      .attr('fill', function(d, i) {
+//        return cColor(d.data.label);
+//      });
 
 /*var dataset = [
         { label: 'Abulia', count: 10 },
@@ -147,7 +142,8 @@ function getDemand() {
 			console.log(error);
 			return;
 		}
-		document.getElementById('power_demand_value').innerHTML = stdout;
+		var text = JSON.parse(stdout)
+		document.getElementById('power_demand_value').innerHTML = text[0].value;
 	});
 }
 
