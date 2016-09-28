@@ -2,10 +2,10 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const d3  = require("d3");
-var data = require('./mydata.json');
 const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
 
+var data = require('./mydata.json');
 
   var width = 500;
   var height = 500;
@@ -23,46 +23,57 @@ const execSync = require('child_process').execSync;
       .innerRadius(radius - donutWidth)             // UPDATED
       .outerRadius(radius);
   var pie = d3.pie()
-      .value(function(d) { return d.count; })
+      .value(function(d) { return d.value; })
       .sort(null);
   var path = svg.selectAll('path')
       .data(pie(data))
-      .enter()
-    .append('path')
+    .enter().append('path')
       .attr('d', arc)
       .attr('fill', function(d, i) {
-        return color(d.data.label);
-    });
+        return color(i);
+    })
+      .each(function(d) { this._current = d;});
+function change(data) {
+  path = path.data(pie(data));
+  path.transition().duration(750).attrTween("d", arcTween);
+}
+function arcTween(a) {
+  var i = d3.interpolate(this._current, a);
+  this._current = i(0);
+  return function(t) {
+    return arc(i(t));
+  };
+}
 
 
 //comparison donut graph - curerntly there is an issue of how to move it
 //to the right side
-//    var cWidth = 500;
-//    var cHeight = 500;
-//    var cRadius = Math.min(cWidth, cHeight) / 2;
-//    var cDonutWidth = 75;                            // NEW
-//    var cColor = d3.scaleOrdinal(d3.schemeCategory20b);
-//    var cSvg = d3.select('#chart')
-//      .append('svg')
-//      .attr('width', cWidth)
-//      .attr('height', cHeight)
-//      .append('g')
-//      .attr('transform', 'translate(' + (cWidth*4/1.75) +
-//        ',' + (cHeight*4 / 8) + ')');
-//    var cArc = d3.arc()
-//      .innerRadius(cRadius - cDonutWidth)             // UPDATED
-//      .outerRadius(cRadius);
-//    var cPie = d3.pie()
-//      .value(function(d) { return d.count; })
-//      .sort(null);
-//    var cPath = cSvg.selectAll('path')
-//      .data(cPie(data))
-//      .enter()
-//      .append('path')
-//      .attr('d', cArc)
-//      .attr('fill', function(d, i) {
-//        return cColor(d.data.label);
-//      });
+/*    var cWidth = 500;
+    var cHeight = 500;
+    var cRadius = Math.min(cWidth, cHeight) / 2;
+    var cDonutWidth = 75;                            // NEW
+    var cColor = d3.scaleOrdinal(d3.schemeCategory20b);
+    var cSvg = d3.select('#chart')
+      .append('svg')
+      .attr('width', cWidth)
+      .attr('height', cHeight)
+      .append('g')
+      .attr('transform', 'translate(' + (cWidth*4/1.75) +
+        ',' + (cHeight*4 / 8) + ')');
+    var cArc = d3.arc()
+      .innerRadius(cRadius - cDonutWidth)             // UPDATED
+      .outerRadius(cRadius);
+    var cPie = d3.pie()
+      .value(function(d) { return d.count; })
+      .sort(null);
+    var cPath = cSvg.selectAll('path')
+      .data(cPie(data))
+      .enter()
+      .append('path')
+      .attr('d', cArc)
+      .attr('fill', function(d, i) {
+        return cColor(d.data.label);
+      });*/
 
 /*var dataset = [
         { label: 'Abulia', count: 10 },
@@ -132,7 +143,6 @@ function changeWeather(text) {
 	var json_response = JSON.parse(text);
 	document.getElementById('temp').innerHTML = json_response.current_observation.temp_f;
 	document.getElementById('weather_icon').src = json_response.current_observation.icon_url;
-	//document.getElementById('location').innerHTML = json_response['location'].city;
 	document.getElementById('city').innerHTML = json_response.current_observation.display_location.city;
 }
 
@@ -142,8 +152,9 @@ function getDemand() {
 			console.log(error);
 			return;
 		}
-		var text = JSON.parse(stdout)
-		document.getElementById('power_demand_value').innerHTML = text[0].value;
+		var data = JSON.parse(stdout)
+		document.getElementById('power_demand_value').innerHTML = data[0].value;
+    change(data.slice(1));
 	});
 }
 
