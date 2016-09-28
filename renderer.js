@@ -148,7 +148,7 @@ function changeWeather(text) {
 }
 
 function getDemand() {
-	exec('python python/get_data.py', (error, stdout, stderr) => {
+	exec('python python/get_data.py', (error, stdout, stderr) => { 
 		if (error) {
 			console.log(error);
 			return;
