@@ -11,7 +11,8 @@ var data = require('./mydata.json');
   var height = 500;
   var radius = Math.min(width, height) / 2;
   var donutWidth = 75;                            // NEW
-  var color = d3.scaleOrdinal(d3.schemeCategory20b);
+  //var color = d3.scaleOrdinal(d3.schemeCategory20b);
+  var color = d3.scaleOrdinal(d3.schemeCategory10);
   var svg = d3.select('#chart')
     .append('svg')
       .attr('width', width)
@@ -147,7 +148,7 @@ function changeWeather(text) {
 }
 
 function getDemand() {
-	exec('python python/get_data.py', (error, stdout, stderr) => { 
+	exec('python python/get_data.py', (error, stdout, stderr) => {
 		if (error) {
 			console.log(error);
 			return;
