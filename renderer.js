@@ -11,7 +11,6 @@ var data = require('./mydata.json');
   var height = 500;
   var radius = Math.min(width, height) / 2;
   var donutWidth = 75;                            // NEW
-  //var color = d3.scaleOrdinal(d3.schemeCategory20b);
   var color = d3.scaleOrdinal(d3.schemeCategory10);
   var svg = d3.select('#chart')
     .append('svg')
@@ -45,69 +44,26 @@ function arcTween(a) {
     return arc(i(t));
   };
 }
-
-
 //comparison donut graph - curerntly there is an issue of how to move it
 //to the right side
-/*    var cWidth = 500;
-    var cHeight = 500;
-    var cRadius = Math.min(cWidth, cHeight) / 2;
-    var cDonutWidth = 75;                            // NEW
-    var cColor = d3.scaleOrdinal(d3.schemeCategory20b);
-    var cSvg = d3.select('#chart')
-      .append('svg')
-      .attr('width', cWidth)
-      .attr('height', cHeight)
-      .append('g')
-      .attr('transform', 'translate(' + (cWidth*4/1.75) +
-        ',' + (cHeight*4 / 8) + ')');
-    var cArc = d3.arc()
-      .innerRadius(cRadius - cDonutWidth)             // UPDATED
-      .outerRadius(cRadius);
-    var cPie = d3.pie()
-      .value(function(d) { return d.count; })
+  var svg2 = d3.select('#chart')
+    .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+    .append('g')
+      .attr('transform', 'translate(' + (width / 2) +
+        ',' + (height / 2) + ')');
+  var pie2 = d3.pie()
+      .value(function(d) { return d.value; })
       .sort(null);
-    var cPath = cSvg.selectAll('path')
-      .data(cPie(data))
-      .enter()
-      .append('path')
-      .attr('d', cArc)
+  var path2 = svg2.selectAll('path')
+      .data(pie2(data))
+    .enter().append('path')
+      .attr('d', arc)
       .attr('fill', function(d, i) {
-        return cColor(d.data.label);
-      });*/
-
-/*var dataset = [
-        { label: 'Abulia', count: 10 },
-        { label: 'Betelgeuse', count: 20 },
-        { label: 'Cantaloupe', count: 30 },
-        { label: 'Dijkstra', count: 40 }
-      ];
-      var width = 500;
-      var height = 500;
-      var radius = Math.min(width, height) / 2;
-      var donutWidth = 75;                            // NEW
-      var color = d3.scaleOrdinal(d3.schemeCategory20b);
-      var svg = d3.select('#chart')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .append('g')
-        .attr('transform', 'translate(' + (width / 2) +
-          ',' + (height / 2) + ')');
-      var arc = d3.arc()
-        .innerRadius(radius - donutWidth)             // UPDATED
-        .outerRadius(radius);
-      var pie = d3.pie()
-        .value(function(d) { return d.count; })
-        .sort(null);
-      var path = svg.selectAll('path')
-        .data(pie(dataset))
-        .enter()
-        .append('path')
-        .attr('d', arc)
-        .attr('fill', function(d, i) {
-          return color(d.data.label);
-        });*/
+        return color(i);
+    })
+      .each(function(d) { this._current = d;});
 
 var HttpClient = function() {
 	this.get = function(aUrl, aCallback) {
