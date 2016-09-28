@@ -8,11 +8,11 @@ if __name__ == '__main__':
 	home_appliance = round(random.random() * 15, 2) + 35
 	misc = round(random.random() * 4, 2) + 5
 	power_consumption = [
-			{'name' : 'current_demand', 'value' : current_demand}, 
-			{'name' : 'air_conditioning', 'value' : air_conditioning},
-			{'name' : 'lighting', 'value' : lighting},
-			{'name' :'home_appliances', 'value' : home_appliance},
-			{'name' : 'misc', 'value' : misc}
+			{'label' : 'current_demand', 'value' : current_demand}, 
+			{'label' : 'air_conditioning', 'value' : air_conditioning},
+			{'label' : 'lighting', 'value' : lighting},
+			{'label' :'home_appliances', 'value' : home_appliance},
+			{'label' : 'misc', 'value' : misc}
 			]
 	print(json.dumps(power_consumption))
 	
