@@ -48,10 +48,10 @@ function arcTween(a) {
 //to the right side
   var svg2 = d3.select('#chart')
     .append('svg')
-      .attr('width', width)
+      .attr('width', width*2)
       .attr('height', height)
     .append('g')
-      .attr('transform', 'translate(' + (width / 2) +
+      .attr('transform', 'translate(' + (width) +
         ',' + (height / 2) + ')');
   var pie2 = d3.pie()
       .value(function(d) { return d.value; })
@@ -104,7 +104,7 @@ function changeWeather(text) {
 }
 
 function getDemand() {
-	exec('python python/get_data.py', (error, stdout, stderr) => { 
+	exec('python python/get_data.py', (error, stdout, stderr) => {
 		if (error) {
 			console.log(error);
 			return;
